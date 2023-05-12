@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Bouncing Lime</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			overflow: auto;
+			position: relative;
+			height: 100vh;
+		}
+		canvas {
+			display: block;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: -1;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+
+	<script>
+		// Get the canvas element and its context
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+
+		// Set the initial position and velocity of the lime
+		var x = canvas.width / 2;
+		var y = canvas.height / 2;
+		var dx = 2;
+		var dy = -2;
+
+		// Set the canvas width and height to match the window size
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+		// Draw the lime on the canvas
+		function drawLime() {
+			ctx.beginPath();
+			ctx.arc(x, y, 20, 0, Math.PI * 2);
+			ctx.fillStyle = "lime";
+			ctx.fill();
+			ctx.closePath();
+		}
+
+		// Update the position of the lime and detect collisions with the walls
+		function update() {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			drawLime();
+
+			if (x + dx > canvas.width - 20 || x + dx < 20) {
+				dx = -dx;
+			}
+			if (y + dy > canvas.height - 20 || y + dy < 20) {
+				dy = -dy;
+			}
+
+			x += dx;
+			y += dy;
+		}
+
+		// Call the update function repeatedly to animate the lime
+		setInterval(update, 10);
+	</script>
+</body>
+</html>
